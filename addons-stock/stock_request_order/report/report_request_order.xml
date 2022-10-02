@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<template id="report_request_order_document">
+    <t t-call="web.external_layout">
+<!--        <t t-set="doc" t-value="doc.with_context(lang=doc.partner_id.lang)" />-->
+        <div class="page">
+            <div class="oe_structure"/>
+
+            <h2 class="mt16">
+                <t>
+                    <span>Request Order # </span>
+                </t>
+                <span t-field="doc.name"/>
+            </h2>
+
+            <div class="row mt32 mb32" id="informations">
+                <div t-if="doc.requester_user_id" class="col-auto col-3 mw-100 mb-2">
+                    <strong>Requester:</strong>
+                    <p class="m-0" t-field="doc.requester_user_id"/>
+                </div>
+                <div t-if="doc.request_date" class="col-auto col-3 mw-100 mb-2">
+                    <strong>Request Date:</strong>
+                    <p class="m-0" t-field="doc.request_date"/>
+                </div>
+                <div t-if="doc.payment_journal_id" class="col-auto col-3 mw-100 mb-2">
+                    <strong>Payment Journal:</strong>
+                    <p class="m-0" t-field="doc.payment_journal_id"/>
+                </div>
+            </div>
+
+            <table class="table table-sm o_main_table">
+                <thead style="display: table-row-group">
+                    <tr>
+                        <th name="th_description" class="text-left">Product</th>
+                        <th name="th_uom" class="text-left">UoM</th>
+                        <th name="th_po_no" class="text-left">PO No</th>
+                        <th name="th_bill_no" class="text-left">Bill No</th>
+                        <th name="th_qty_req" class="text-right">Req Qty</th>
+                        <th name="th_qty_ordered" class="text-right">Ordered Qty</th>
+                        <th name="th_qty_received" class="text-right">Received Qty</th>
+                        <th name="th_qty_billed" class="text-right">Billed Qty</th>
+                    </tr>
+                </thead>
+                <tbody class="sale_tbody">
+                    <t t-foreach="doc.request_lines" t-as="line">
+                        <t t-set="line_res" t-value="doc._get_line_details(line)"/>
+                        <tr>
+                                <td name="td_name"><span t-field="line.product_id"/></td>
+                                <td name="td_uom"><span t-field="line.uom_id"/></td>
+                                <td name="td_po_no"><span t-esc="line_res['po_no']"/></td>
+                                <td name="td_bill_no"><span t-esc="line_res['bill_no']"/></td>
+                                <td name="td_qty_req" class="text-right">
+                                    <span t-field="line.requested_qty"/>
+                                </td>
+                                <td name="td_qty_ordered" class="text-right">
+                                    <span t-field="line.approved_qty"/>
+                                </td>
+                                <td name="td_qty_received" class="text-right">
+                                    <span t-esc="line_res['qty_received']"/>
+                                </td>
+                                <td name="td_qty_billed" class="text-right">
+                                    <span t-esc="line_res['qty_invoiced']"/>
+                                </td>
+                        </tr>
+
+                    </t>
+                </tbody>
+            </table>
+
+            <div class="clearfix" name="so_total_summary">
+                <div id="total" class="row" name="total">
+                    <div t-attf-class="#{'col-4'} ml-auto">
+                        <table class="table table-sm">
+                            <tr class="border-black o_subtotal">
+                                <td name="td_amount_total_label"><strong>Total PR Amount</strong></td>
+                                <td name="td_amount_total" class="text-right">
+                                    <span t-field="doc.amount_total"/>
+                                </td>
+                            </tr>
+                            <tr class="border-black o_total">
+                                <td name="td_amount_paid_label"><strong>Total Paid Amount</strong></td>
+                                <td name="td_amount_paid" class="text-right">
+                                    <t t-set="paid_amount" t-value="doc._get_amount_paid()"/>
+                                    <span t-esc="paid_amount" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                                </td>
+                            </tr>
+                            <tr class="border-black o_total">
+                                <td name="td_amount_balance"><strong>Balance Amount</strong></td>
+                                <td name="td_amount_balance" class="text-right">
+                                    <span t-esc="doc.amount_total - paid_amount" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </t>
+</template>
+
+
+<template id="report_request_order">
+    <t t-call="web.html_container">
+        <t t-foreach="docs" t-as="doc">
+            <t t-call="stock_request_order.report_request_order_document"/>
+        </t>
+    </t>
+</template>
+
+</odoo>

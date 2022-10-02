@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_users_form_wh_stock_restrictions_inherit1" model="ir.ui.view">
+            <field name="name">res.users.form.wh.stock.restrictions.inherit1</field>
+            <field name="model">res.users</field>
+            <field name="inherit_id" ref="base_user_access_limitation.view_users_form_access_limitation_inherit"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@name='access_limitations']" position="inside">
+                    <group string="Warehouse Restrictions" attrs="{'invisible': [('login','=', 'admin')]}">
+                        <group>
+                            <field name="allowed_warehouse_ids" widget="many2many_tags"/>
+                            <field name="id" invisible="1"/>
+                        </group>
+                        <group>
+                            <field name="allowed_picking_type_ids" widget="many2many_tags"/>
+                        </group>
+                        <group>
+                            <field name="allowed_location_ids" widget="many2many_tags"/>
+                        </group>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,180 @@
+<odoo>
+  <data>
+
+        <record id="view_stock_request_order_search" model="ir.ui.view">
+            <field name="name">view.stock.request.order.search</field>
+            <field name="model">request.order</field>
+            <field name="arch" type="xml">
+                <search string="Request Order">
+                    <field name="name"/>
+                    <field name="requester_user_id"/>
+                    <field name="approval_type_id"/>
+                    <field name="request_status"/>
+<!--                    <field name="payment_journal_id"/>-->
+                    <group expand="0" string="Group By">
+                        <filter string="Request Status" name="request_status" domain="[]" context="{'group_by': 'request_status'}"/>
+                        <filter string="Approval Type" name="approval_type_id" domain="[]" context="{'group_by': 'approval_type_id'}"/>
+                        <filter string="Requester" name="requester_user_id" domain="[]" context="{'group_by': 'requester_user_id'}"/>
+<!--                        <filter string="Payment Journal" name="payment_journal_id" domain="[]" context="{'group_by': 'payment_journal_id'}"/>-->
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="view_stock_request_order_tree" model="ir.ui.view">
+            <field name="name">view.stock.request.order.tree</field>
+            <field name="model">request.order</field>
+            <field name="arch" type="xml">
+                <tree string="Request Order">
+                    <field name="name"/>
+                    <field name="requester_user_id" optional="show"/>
+<!--                    <field name="approver_user_id"/>-->
+                    <field name="request_date" optional="show"/>
+                    <field name="approval_type_id" optional="show"/>
+                    <field name="acquire_method" optional="show"/>
+<!--                    <field name="payment_journal_id" optional="show"/>-->
+                    <field name="user_status" optional="show"/>
+                    <field name="request_status" optional="show"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_stock_request_order_form" model="ir.ui.view">
+            <field name="name">view.stock.request.order.form</field>
+            <field name="model">request.order</field>
+            <field name="arch" type="xml">
+                <form string="Request Order">
+                    <header>
+                        <field name="acquire_method" invisible="1"/>
+                        <field name="user_status" invisible="1"/>
+                        <field name="has_access_to_request" invisible="1"/>
+                        <button name="action_confirm" string="Submit" type="object" attrs="{'invisible':[('request_status','!=','new')]}" class="btn-primary"/>
+                        <button name="action_approve" string="Approve" type="object" attrs="{'invisible':[('user_status','!=','pending')]}"/>
+                        <button name="action_refuse" string="Refuse" type="object" attrs="{'invisible':[('user_status','!=','pending')]}"/>
+                        <button name="action_withdraw" string="Withdraw" type="object" attrs="{'invisible':['|','|',('request_status','==','new'),('user_status','in',['pending','cancel']),('user_status','=',False)]}"
+                            confirm="Are you sure want to Withdraw?" groups="base.group_erp_manager"/>
+                        <button name="action_draft" string="Back To Draft" type="object" attrs="{'invisible':['|',('request_status','!=','cancel'),'&amp;',('user_status','==',False),('has_access_to_request','==',False)]}"/>
+                        <button name="action_cancel" string="Cancel" type="object" attrs="{'invisible':['|',('request_status','in',['new','cancel']),'&amp;',('user_status','==',False),('has_access_to_request','==',False)]}"
+                            confirm="Are you sure want to cancel?" groups="base.group_erp_manager"/>
+                        <field name="request_status" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                    <div class="oe_button_box" name="button_box">
+                    </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" attrs="{'invisible': [('name','=','New')]}"/>
+<!--                            <field name="name"/>-->
+                        </h1>
+                    </div>
+                        <group>
+                            <group>
+                                <field name="requester_user_id"/>
+                                <field name="request_date"/>
+<!--                                <field name="payment_journal_id" options="{'no_create': True}" attrs="{'readonly':[('request_status','not in',('new', 'pending'))]}"/>-->
+                            </group>
+                            <group>
+<!--                                <field name="approver_user_id"/>-->
+                                <field name="approval_type_id" options="{'no_create': True}" attrs="{'readonly':[('request_status','not in',('new', 'pending'))]}"/>
+                                <field name="picking_type_id" attrs="{'readonly':[('request_status','not in',('new', 'pending'))]}"/>
+                                <field name="approved_date" attrs="{'invisible':[('request_status','!=','approved')]}"/>
+                                <field name="acquire_method" invisible="1"/>
+                                <field name="company_id" invisible="1"/>
+<!--                                <field name="currency_id" options="{'no_create': True}" attrs="{'readonly':[('request_status','not in',('new', 'pending'))]}"/>-->
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Request Items">
+                                <field name="request_lines" mode="tree,form" attrs="{'readonly':[('request_status','not in',('new', 'pending'))]}">
+<!--                                <field name="request_lines" mode="tree,form" attrs="{'readonly':[('request_status','not in',('new',))]}">-->
+                                    <tree string="Items" editable="bottom">
+                                        <field name="product_id" options="{'no_create': True}"/>
+                                        <field name="name" style="width: 10 %%" optional="show"/>
+                                        <field name="product_uom_category_id" invisible="1"/>
+                                        <field name="uom_id" style="width: 5 %%" options="{'no_create': True}" optional="show"/>
+                                        <field name="requested_qty" style="width: 40 %%" optional="show"/>
+                                        <field name="approved_qty" style="width: 40 %%" optional="show" />
+<!--                                        attrs="{'readonly': [('parent.request_status','in', ['new','pending'])]}" force_save="1"-->
+<!--                                        <field name="currency_id" optional="hide"/>-->
+<!--                                        <field name="price_unit" optional="show"/>-->
+<!--                                        <field name="taxes_id" widget="many2many_tags" domain="[('type_tax_use','=','purchase')]" context="{'default_type_tax_use': 'purchase', 'search_view_ref': 'account.account_tax_view_search'}" options="{'no_create': True}" optional="show"/>-->
+<!--                                        <field name="price_tax" string="VAT Amount"/>-->
+<!--                                        <field name="price_subtotal" widget="monetary" optional="show"/>-->
+<!--                                        <field name="price_total" widget="monetary" optional="show" string="Total"/>-->
+                                    </tree>
+                                    <form string="Items">
+                                        <group>
+                                            <group>
+                                                <field name="product_id" options="{'no_create': True}"/>
+                                                <field name="name"/>
+                                                <field name="product_uom_category_id" invisible="1"/>
+                                                <field name="uom_id" options="{'no_create': True}"/>
+<!--                                                <field name="price_unit"/>-->
+<!--                                                <field name="taxes_id" widget="many2many_tags" domain="[('type_tax_use','=','purchase')]" context="{'default_type_tax_use': 'purchase', 'search_view_ref': 'account.account_tax_view_search'}" options="{'no_create': True}" optional="show"/>-->
+                                            </group>
+                                            <group>
+                                                <field name="requested_qty"/>
+                                                <field name="approved_qty"/>
+<!--                                                <field name="price_subtotal"/>-->
+                                            </group>
+                                        </group>
+                                    </form>
+                                </field>
+
+<!--                                <group class="oe_subtotal_footer oe_right">-->
+<!--                                    <field name="amount_untaxed" widget="monetary" options="{'currency_field': 'currency_id'}"/>-->
+<!--                                    <field name="amount_tax" widget="monetary" options="{'currency_field': 'currency_id'}"/>-->
+<!--                                    <div class="oe_subtotal_footer_separator oe_inline">-->
+<!--                                        <label for="amount_total"/>-->
+<!--                                    </div>-->
+<!--                                    <field name="amount_total" nolabel="1" class="oe_subtotal_footer_separator" widget="monetary" options="{'currency_field': 'currency_id'}"/>-->
+<!--                                </group>-->
+
+                            </page>
+                        <page string="Approver(s)" name="approvers">
+                            <field name="approver_ids" mode="tree" readonly="True" force_save="1">
+                                <tree editable="bottom" decoration-success="status=='approved'" decoration-warning="status=='pending'" decoration-danger="status=='refused'">
+                                    <field name="existing_request_user_ids" invisible="1"/>
+                                    <field name="user_id" string="Approver" attrs="{'readonly':[('status','!=','new')]}"/>
+                                    <field name="is_user_turn"/>
+                                    <field name="sequence"/>
+                                    <field name="company_id" invisible="1"/>
+                                    <field name="status"/>
+                                </tree>
+                            </field>
+                        </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_stock_request_order" model="ir.actions.act_window">
+            <field name="name">Request Order</field>
+            <field name="res_model">request.order</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain"></field>
+            <field name="context">{}</field>
+            <field name="search_view_id" ref="view_stock_request_order_search"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    No Request orders found. Let's create one!
+                </p><p>
+                    Request order allow you to move request product stock.
+                </p>
+            </field>
+        </record>
+
+        <menuitem id="menu_stock_request_order" name="Request Order"
+                  parent="stock.menu_stock_warehouse_mgmt" sequence="10"
+                  action="action_stock_request_order"
+                  groups="stock.group_stock_manager,stock.group_stock_user"/>
+
+  </data>
+</odoo>

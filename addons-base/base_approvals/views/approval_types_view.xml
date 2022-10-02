@@ -1,0 +1,108 @@
+<odoo>
+  <data>
+
+
+        <record id="view_approval_types_search" model="ir.ui.view">
+            <field name="name">view.approval.types.search</field>
+            <field name="model">approval.types</field>
+            <field name="arch" type="xml">
+                <search string="Approval Types">
+                    <field name="name"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="view_approval_types_tree" model="ir.ui.view">
+            <field name="name">view.approval.types.tree</field>
+            <field name="model">approval.types</field>
+            <field name="arch" type="xml">
+                <tree string="Approval Types">
+                    <field name="name"/>
+                    <field name="description"/>
+                    <field name="acquire_method"/>
+                    <field name="picking_type_id"/>
+                    <field name="company_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_approval_types_form" model="ir.ui.view">
+            <field name="name">view.approval.types.form</field>
+            <field name="model">approval.types</field>
+            <field name="arch" type="xml">
+                <form string="Approval Types">
+                    <header>
+                    </header>
+                    <sheet>
+                    <div class="oe_button_box" name="button_box">
+                    </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                    </div>
+                        <group>
+                            <group>
+                                <field name="description"/>
+                                <field name="company_id"/>
+                            </group>
+                            <group>
+                                <field name="acquire_method"/>
+                                <field name="picking_type_id" options="{'no_create': True}"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Options">
+                                <group>
+                                    <group string="Approvers" name="approvers">
+                                        <field name="mail_template_id" options="{'no_create': True}"/>
+                                        <field name="is_manager_approver"/>
+<!--                                        <field name="user_ids" widget="many2many_tags">-->
+<!--                                        </field>-->
+                                        <field name="approval_minimum"/>
+                                        <field name="approval_users" mode="tree,form">
+                                            <tree string="Approval Users" editable="bottom">
+                                                <field name="user_id" options="{'no_create': True}"/>
+                                                <field name="name"/>
+                                            </tree>
+                                        </field>
+
+                                    </group>
+                                </group>
+
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_approval_types" model="ir.actions.act_window">
+            <field name="name">Approval Types</field>
+            <field name="res_model">approval.types</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain"></field>
+            <field name="context">{}</field>
+            <field name="search_view_id" ref="view_approval_types_search"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    No Approval Types found. Let's create one!
+                </p><p>
+                    Approval Types
+                </p>
+            </field>
+        </record>
+
+        <menuitem id="menu_approval_types" name="Approval Types"
+                  parent="stock.menu_warehouse_config" sequence="10"
+                  action="action_approval_types"
+                  groups="stock.group_stock_manager,stock.group_stock_user"/>
+
+  </data>
+</odoo>

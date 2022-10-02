@@ -1,0 +1,35 @@
+<odoo>
+  <data>
+
+    <record id="view_stock_request_order_form_inherit_buttons" model="ir.ui.view">
+            <field name="name">view.stock.request.order.form.inherit.buttons</field>
+            <field name="model">request.order</field>
+            <field name="inherit_id" ref="base_approvals.view_stock_request_order_form"/>
+            <field name="arch" type="xml">
+                <button name="action_approve" position="after">
+                    <field name="purchase_count" invisible="1"/>
+                    <field name="transfer_count" invisible="1"/>
+                    <button name="action_create_purchase_order" string="Create Purchase Order" type="object" class="btn-primary"
+                            attrs="{'invisible':['|','|', ('acquire_method', '=', 'internal_transfer'), ('request_status','!=','approved'),('purchase_count','!=',0)]}"/>
+                    <button name="action_create_internal_transfer" string="Create Internal Transfer" type="object" class="btn-primary"
+                            attrs="{'invisible':['|','|', ('acquire_method', '=', 'purchase_order'), ('request_status','!=','approved'),('transfer_count','!=',0)]}"/>
+                <button name="action_print_request_order" string="Print Summary Report" type="object" attrs="{'invisible':[('acquire_method','!=','purchase_order')]}"/>
+                </button>
+                <div name="button_box" position="inside">
+                        <button type="object"  name="action_view_purchases"
+                            class="oe_stat_button"
+                            icon="fa-pencil-square-o" attrs="{'invisible':[('purchase_count', '=', 0)]}">
+                            <field name="purchase_count" widget="statinfo" string="Purchases"/>
+                        </button>
+                        <button type="object"  name="action_view_transfers"
+                            class="oe_stat_button"
+                            icon="fa-pencil-square-o" attrs="{'invisible':[('transfer_count', '=', 0)]}">
+                            <field name="transfer_count" widget="statinfo" string="Transfers"/>
+                        </button>
+                </div>
+
+            </field>
+    </record>
+
+  </data>
+</odoo>

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <record id="email_template_base_approvals" model="mail.template">
+            <field name="name">Base Approvals: Request Order/RFQ</field>
+            <field name="model_id" ref="base_approvals.model_request_order"/>
+            <field name="subject">Approve Request- ${object.company_id.name}(Ref ${object.name or 'n/a' })</field>
+            <field name="email_from"></field>
+            <field name="body_html" type="html">
+<div style="margin: 0px; padding: 0px;">
+    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+        Hello,
+        <br/><br/>
+        Please Approve
+            <strong>${object.name}</strong>
+        <br/><br/>
+        Do not hesitate to contact us if you have any questions.
+        <br/>
+    </p>
+</div>
+            </field>
+<!--            <field name="lang">${object.partner_id.lang}</field>-->
+            <field name="auto_delete" eval="True"/>
+        </record>
+
+
+        <record id="email_template_ceo_approved" model="mail.template">
+            <field name="name">Base Approvals: RO- CEO Approved</field>
+            <field name="model_id" ref="base_approvals.model_request_order"/>
+            <field name="subject">Approve Request- ${object.company_id.name}(Ref ${object.name or 'n/a' })</field>
+            <field name="email_from"></field>
+            <field name="body_html" type="html">
+<div style="margin: 0px; padding: 0px;">
+    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+        Hello,
+        <br/><br/>
+        CEO Approved
+            <strong>${object.name}</strong>
+        <br/><br/>
+        Do not hesitate to contact us if you have any questions.
+        <br/>
+    </p>
+</div>
+            </field>
+<!--            <field name="lang">${object.partner_id.lang}</field>-->
+            <field name="auto_delete" eval="True"/>
+        </record>
+
+
+
+        <record id="email_template_vp_approved" model="mail.template">
+            <field name="name">Base Approvals: RO- Vice President Approved</field>
+            <field name="model_id" ref="base_approvals.model_request_order"/>
+            <field name="subject">Approve Request- ${object.company_id.name}(Ref ${object.name or 'n/a' })</field>
+            <field name="email_from"></field>
+            <field name="body_html" type="html">
+<div style="margin: 0px; padding: 0px;">
+    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+        Hello,
+        <br/><br/>
+        Vice President Approved
+            <strong>${object.name}</strong>
+        <br/><br/>
+        Do not hesitate to contact us if you have any questions.
+        <br/>
+    </p>
+</div>
+            </field>
+<!--            <field name="lang">${object.partner_id.lang}</field>-->
+            <field name="auto_delete" eval="True"/>
+        </record>
+
+
+        <record id="email_template_all_users_approved" model="mail.template">
+            <field name="name">Base Approvals: RO- All User Approved</field>
+            <field name="model_id" ref="base_approvals.model_request_order"/>
+            <field name="subject">Request Order Approved by All- ${object.company_id.name}(Ref ${object.name or 'n/a' })</field>
+            <field name="email_from"></field>
+            <field name="body_html" type="html">
+<div style="margin: 0px; padding: 0px;">
+    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+        Hello,
+        <br/><br/>
+        Request order has been approved by all users/approvers.
+            <strong>${object.name}</strong>
+        <br/><br/>
+        Do not hesitate to contact us if you have any questions.
+        <br/>
+    </p>
+</div>
+            </field>
+            <field name="auto_delete" eval="True"/>
+        </record>
+
+    </data>
+</odoo>

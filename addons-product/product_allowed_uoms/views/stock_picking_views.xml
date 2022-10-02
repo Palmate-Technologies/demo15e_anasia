@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="stock_picking_inherit_form" model="ir.ui.view">
+        <field name="name">stock.picking.inherit.form</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='move_ids_without_package']/tree/field[@name='product_uom']" position="attributes">
+                <attribute name="context">{'product_id': product_id}</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="move_picking_inherit_tree" model="ir.ui.view">
+        <field name="name">move.line.inherit.tree</field>
+        <field name="model">stock.move.line</field>
+        <field name="inherit_id" ref="stock.view_stock_move_line_detailed_operation_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='product_uom_id']" position="attributes">
+                <attribute name="context">{'product_id': product_id}</attribute>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

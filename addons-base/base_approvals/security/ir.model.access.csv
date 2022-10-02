@@ -1,0 +1,12 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_request_order_user,request.order user,model_request_order,stock.group_stock_user,1,1,1,1
+access_request_order_manager,request.order manager,model_request_order,stock.group_stock_manager,1,1,1,1
+access_request_order_line_user,request.order.line user,model_request_order_line,stock.group_stock_user,1,1,1,1
+access_request_order_line_manager,request.order.line manager,model_request_order_line,stock.group_stock_manager,1,1,1,1
+access_approval_types_user,approval.types user,model_approval_types,stock.group_stock_user,1,1,1,1
+access_approval_types_manager,approval.types manager,model_approval_types,stock.group_stock_manager,1,1,1,1
+access_approval_approver_base_user,approval.approver.base user,model_approval_approver_base,stock.group_stock_user,1,1,1,1
+access_approval_approver_base_manager,approval.approver.base manager,model_approval_approver_base,stock.group_stock_user,1,1,1,1
+access_approval_users_user,approval.users user,model_approval_users,stock.group_stock_user,1,1,1,1
+access_approval_users_manager,approval.users manager,model_approval_users,stock.group_stock_manager,1,1,1,1
+access_approval_uom_uom,uom.uom user,stock.model_uom_uom,stock.group_stock_user,1,1,1,0

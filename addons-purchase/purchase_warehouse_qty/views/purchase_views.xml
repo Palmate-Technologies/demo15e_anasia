@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<odoo>
+    <record id="purchase_order_form_warehouse_qty" model="ir.ui.view">
+        <field name="name">purchase.order.form.warehouse.qty</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+                <xpath expr="//field[@name='order_line']/tree/field[@name='product_qty']" position="after">
+<!--                    <button name="show_warehouse_stock" type="object" icon="fa-fa-cubes" class="oe_highlight" />-->
+                    <button name="show_warehouse_stock" type="object" class="fa fa-cubes"/>
+                </xpath>
+        </field>
+    </record>
+</odoo>

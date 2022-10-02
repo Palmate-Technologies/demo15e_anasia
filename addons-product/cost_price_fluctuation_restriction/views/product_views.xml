@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+        <record id="product_template_form_view_cp_variation" model="ir.ui.view">
+            <field name="name">product.template.form.view.cp.variation</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_form_view"/>
+            <field name="arch" type="xml">
+                <field name="categ_id" position="before">
+                    <label for="allowed_cp_variation_perc" groups="base.group_user"/>
+                    <div name="cp_variation" class="o_row" groups="base.group_user">
+                        <field name="allowed_cp_variation_perc"/>
+                        <span class="oe_read_only">%</span>
+                    </div>
+                </field>
+            </field>
+        </record>
+
+</odoo>

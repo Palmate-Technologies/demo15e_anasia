@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="product_supplierinfo_readonly_unitprice" model="ir.ui.view">
+        <field name="name">product.supplierinfo.readonly.unitprice</field>
+        <field name="model">product.supplierinfo</field>
+        <field name="inherit_id" ref="product.product_supplierinfo_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="///field[@name='product_code']" position="after">
+                <field name="price_unit_readonly"/>
+            </xpath>
+
+        </field>
+    </record>
+    <record id="product_supplierinfo_tree_view_readonly_unitprice" model="ir.ui.view">
+        <field name="name">product.supplierinfo.tree.view.readonly.unitprice</field>
+        <field name="model">product.supplierinfo</field>
+        <field name="inherit_id" ref="product.product_supplierinfo_tree_view"/>
+        <field name="arch" type="xml">
+            <field name="price" position="after">
+                <field name="price_unit_readonly" optional="show"/>
+            </field>
+
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_pos_order_accounting_date" model="ir.ui.view">
+        <field name="name">pos.order.accounting.date</field>
+        <field name="model">pos.order</field>
+        <field name="inherit_id" ref="point_of_sale.view_pos_pos_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_id']" position="before">
+                <field name="accounting_date"/>
+            </xpath>
+        </field>
+    </record>
+
+<!--    <record id="view_report_pos_order_search_accounting_date" model="ir.ui.view">-->
+<!--        <field name="name">report.pos.order.accounting.date</field>-->
+<!--        <field name="model">report.pos.order</field>-->
+<!--        <field name="inherit_id" ref="point_of_sale.view_report_pos_order_search"/>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <search>-->
+<!--&lt;!&ndash;                <group expand="1" string="Group By">&ndash;&gt;-->
+<!--&lt;!&ndash;                    <filter string="Accounting Date" name="accounting_date" context="{'group_by':'accounting_date'}"/>&ndash;&gt;-->
+<!--&lt;!&ndash;                </group>&ndash;&gt;-->
+<!--            </search>-->
+<!--        </field>-->
+<!--    </record>-->
+
+<!--    <record id="view_report_pos_order_pivot_accounting_date" model="ir.ui.view">-->
+<!--        <field name="name">report.pos.order.pivot.accounting.date</field>-->
+<!--        <field name="model">report.pos.order</field>-->
+<!--        <field name="inherit_id" ref="point_of_sale.view_report_pos_order_pivot"/>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <field name="date" position="after">-->
+<!--                <field name="accounting_date" interval="date" type="col"/>-->
+<!--            </field>-->
+<!--        </field>-->
+<!--    </record>-->
+
+
+</odoo>

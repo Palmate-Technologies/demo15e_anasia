@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_create_purchase_order_user,create.purchase.order user,model_create_purchase_order,stock.group_stock_user,1,1,1,1
+access_create_purchase_order_manager,create.purchase.order manager,model_create_purchase_order,stock.group_stock_manager,1,1,1,1
+access_create_purchase_order_line_user,create.purchase.order.line user,model_create_purchase_order_line,stock.group_stock_user,1,1,1,1
+access_create_purchase_order_line_manager,create.purchase.order.line manager,model_create_purchase_order_line,stock.group_stock_manager,1,1,1,1
+access_create_internal_transfer_user,create.internal.transfer user,model_create_internal_transfer,stock.group_stock_user,1,1,1,1
+access_create_internal_transfer_manager,create.internal.transfer manager,model_create_internal_transfer,stock.group_stock_manager,1,1,1,1

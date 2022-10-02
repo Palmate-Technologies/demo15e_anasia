@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        
+        <record id="view_users_form_is_president" model="ir.ui.view">
+            <field name="name">res.users.form.is.president</field>
+            <field name="model">res.users</field>
+            <field name="inherit_id" ref="base.view_users_form"/>
+            <field name="arch" type="xml">
+                <field name="tz" position="after">
+                    <field name="is_vp"/>
+                    <field name="is_ceo"/>
+                </field>
+            </field>
+        </record>
+        
+    </data>
+</odoo>
